@@ -109,7 +109,7 @@ export default function Index() {
       setEmployee_number('')
       //setUserData('')
       setScan(true)
-    }, 3000);
+    }, 1000);
     return () => clearTimeout(timer);
   }, [userData])
 
