@@ -72,6 +72,13 @@ const useStyles = makeStyles((theme) => ({
   profilePic: {
     width: '100%',
     height: 'auto',
+  },
+  blankLive: {
+    height: 400,
+  },
+  profileCard: {
+    marginTop: 20,
+    height: 400
   }
 }));
 
@@ -80,11 +87,15 @@ const videoConstraints = {
   height: 1080,
   facingMode: "user"
 };
- 
+
 
 export default function RecordAttendance(props) {
   const classes = useStyles();
   const employeeProfilePic = `http://dev-metaspf401.sunpowercorp.com:4000/codecs-img/${props.userData.id}.png` || '';
+  
+  function addDefaultImg(e){
+    e.target.src = `https://robohash.org/${props.userData.id}`
+  }
 
   return (
     <Container fixed>
@@ -104,22 +115,26 @@ export default function RecordAttendance(props) {
                   onChange={props.handleEmployeeNumberOnChange}
                   value={props.employee_number}
                 />
+                <Paper elevation={0} className={classes.profileCard}>
+                  <CardContent>
+                    {
+                      props.userData.id && props.userData.name ?
+                      <>
+                        <div className={classes.profilePicContainer}>
+                          <img src={employeeProfilePic} onError={addDefaultImg} className={classes.profilePic}/>
+                        </div>
+                        <Typography align="left" variant="body2" color="textSecondary">Employee No.</Typography>
+                        <Typography align="left" variant="h3" gutterBottom>{props.userData.id}</Typography>
+                        <Typography align="left" variant="body2" color="textSecondary">Name</Typography>
+                        <Typography align="left" variant="h3">{props.userData.name}</Typography>
+                      </>
+                      :
+                      <></>
+                    }
+                  </CardContent>
+                </Paper>
                 {
-                  props.userData.id && props.userData.name && props.employee_number ?
-                  <Paper elevation={0}>
-                    <CardContent>
-                      <div className={classes.profilePicContainer}>
-                        <img src={employeeProfilePic} className={classes.profilePic}/>
-                      </div>
-                      <Typography align="left" variant="body2" color="textSecondary">Employee No.</Typography>
-                      <Typography align="left" variant="h3" gutterBottom>{props.userData.id}</Typography>
-                      <Typography align="left" variant="body2" color="textSecondary">Name</Typography>
-                      <Typography align="left" variant="h3">{props.userData.name}</Typography>
-                    </CardContent>
-                  </Paper>
-                  :
-                  <></>
-                }
+                  /*
                 <Webcam
                   audio={false}
                   mirrored={true}
@@ -131,6 +146,7 @@ export default function RecordAttendance(props) {
                   width={'0'}
                   videoConstraints={videoConstraints}
                 />
+                */}
               </Container>
             </Paper>
           </Grid>
@@ -140,6 +156,11 @@ export default function RecordAttendance(props) {
             props.userData.id && props.userData.name && props.employee_number ? 
             <Paper elevation={0} className={classes.rightPanelPaper} >
               <CardContent>
+                <Paper elevation={2} className={classes.blankLive}>
+                  <CardContent>
+
+                  </CardContent>
+                </Paper>
                 <img src={props.imgSrc} className={classes.profilePic}/>
               </CardContent>
               <Container maxWidth="md">

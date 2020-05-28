@@ -9,6 +9,7 @@ export default function Index() {
   const [ employee_number, setEmployee_number ] = useState('');
   const handleEmployeeNumberOnChange = (e) => {
     setEmployee_number(e.target.value);
+    setScan(true)
   }
 
   // state for User Data
@@ -23,6 +24,9 @@ export default function Index() {
   const [imgSrc, setImgSrc] = useState(null);
   //console.log(imgSrc);
   const webcamRef = useRef(null);
+
+  // state for new scan remove image
+  const [ scan, setScan ] = useState(true);
   
   // get user data info
   useEffect(() => {
@@ -32,19 +36,20 @@ export default function Index() {
       let response = await fetch(`${route}/${employee_number}`)
   
       if(response.status === 200){
-        const imageSrc = webcamRef.current.getScreenshot();
-        setImgSrc(imageSrc);
+        //const imageSrc = webcamRef.current.getScreenshot();
+        //setImgSrc(imageSrc);
         setUserData(await response.json());
+        setScan(false)
       }
     }
 
     fetchAccountInfo().then(() => {
         
-      if(userData.id){
+      if(!scan){
         async function SubmitToServer(){
           let routePOST = 'http://dev-metaspf401.sunpowercorp.com:4000/recordattendance'
 
-          console.log(imgSrc)
+          //console.log(imgSrc)
           let responsePOST = await fetch(`${routePOST}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -63,7 +68,7 @@ export default function Index() {
         }
 
         SubmitToServer().then(() => {
-          if(userData.id){
+          if(!scan){
             async function fetchAttendance(){
               let route = 'http://dev-metaspf401.sunpowercorp.com:4000/getattendancelogs'
               
@@ -102,7 +107,8 @@ export default function Index() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setEmployee_number('')
-      setUserData('')
+      //setUserData('')
+      setScan(true)
     }, 3000);
     return () => clearTimeout(timer);
   }, [userData])
