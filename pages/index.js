@@ -2,8 +2,11 @@ import React, { Fragment, useState, useEffect, useRef, useCallback } from 'react
 import Layout from '../components/Layout';
 import AppBar from '../components/AppBar';
 import RecordAttendance from '../components/RecordAttendance';
+import { withAuthSync, logout } from '../utils/auth';
+import nextCookie from 'next-cookies';
 
-export default function Index() {
+
+function Index() {
 
   // state for Employee Number
   const [ employee_number, setEmployee_number ] = useState('');
@@ -58,7 +61,8 @@ export default function Index() {
               employeeNumber: userData.id,
               mode: 'IN',
               device: 'ENTRANCE1',
-              base64String: imgSrc
+              base64String: imgSrc,
+              triageRes: 'PASS'
             })
           })
 
@@ -131,4 +135,11 @@ export default function Index() {
       </Layout>
     </Fragment>
   );
+}
+
+export default withAuthSync(Index);
+
+Index.getInitialProps = async (context) => {
+  const {token} = nextCookie(context);
+  return {token};
 }

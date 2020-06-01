@@ -186,7 +186,7 @@ export default function RecordAttendance(props) {
                 {
                   props.recentLogs !== 'undefined' && props.recentLogs !== null && props.recentLogs.length > 0 ?
                     props.recentLogs.slice(0, 5).map((data) => (
-                      <Fragment>
+                      <Fragment key={data.date_time}>
                         <div style={{padding: 10, flex: 1}}>
                           <Typography variant="h6" color="primary" align="right">{data.employeeNumber} has successfully logged in</Typography>
                           <Typography variant="body2" color="textSecondary" align="right">{moment(data.date_time).fromNow()}</Typography>
