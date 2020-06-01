@@ -66,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
     height: 500
   },
   profilePicContainer: {
-    width: '50%',
+    width: '80%',
     margin: 'auto'
   },
   profilePic: {
@@ -77,8 +77,11 @@ const useStyles = makeStyles((theme) => ({
     height: 400,
   },
   profileCard: {
-    marginTop: 20,
+    marginTop: 10,
     height: 400
+  },
+  profileCardContent: {
+    padding: 5
   }
 }));
 
@@ -109,6 +112,7 @@ export default function RecordAttendance(props) {
               <Container maxWidth="sm">
                 <TextField
                   fullWidth
+                  margin="dense"
                   variant="outlined"
                   label="Scan ID to Enter"
                   autoFocus
@@ -116,17 +120,23 @@ export default function RecordAttendance(props) {
                   value={props.employee_number}
                 />
                 <Paper elevation={0} className={classes.profileCard}>
-                  <CardContent>
+                  <CardContent className={classes.profileCardContent}>
                     {
                       props.userData.id && props.userData.name ?
                       <>
                         <div className={classes.profilePicContainer}>
                           <img src={employeeProfilePic} onError={addDefaultImg} className={classes.profilePic}/>
                         </div>
-                        <Typography align="left" variant="body2" color="textSecondary">Employee No.</Typography>
-                        <Typography align="left" variant="h3" gutterBottom>{props.userData.id}</Typography>
-                        <Typography align="left" variant="body2" color="textSecondary">Name</Typography>
-                        <Typography align="left" variant="h3">{props.userData.name}</Typography>
+                        <Grid container>
+                          <Grid item xs={12} sm={12} md={3} lg={3}>
+                            <Typography align="left" variant="body2" color="textSecondary">Employee No.</Typography>
+                            <Typography align="left" variant="h4" gutterBottom>{props.userData.id}</Typography>
+                          </Grid>
+                          <Grid item xs={12} sm={12} md={9} lg={9}>
+                            <Typography align="left" variant="body2" color="textSecondary">Name</Typography>
+                            <Typography align="left" variant="h4">{props.userData.name}</Typography>
+                          </Grid>
+                        </Grid>
                       </>
                       :
                       <></>

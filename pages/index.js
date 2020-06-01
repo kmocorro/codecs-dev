@@ -116,7 +116,7 @@ export default function Index() {
 
   return (
     <Fragment>
-      <AppBar />
+      {/*<AppBar />*/}
       <Layout>
         <RecordAttendance
           imgSrc={imgSrc}
