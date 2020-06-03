@@ -21,6 +21,7 @@ function Index(props) {
 
   // state for RECORD ATTENDACE response message
   const [ serverResponseMessage, setServerResponseMessage ] = useState('');
+  console.log(serverResponseMessage);
 
   // state for User Data
   const [ userData, setUserData ] = useState('');
@@ -37,8 +38,7 @@ function Index(props) {
 
   // state for new scan remove image
   const [ scan, setScan ] = useState(true);
-  
-  // post/get login data
+
   useEffect(() => {
     async function fetchLoginInfo(){
       let routePOST = 'http://dev-metaspf401.sunpowercorp.com:4000/getuserprofile'
@@ -58,7 +58,7 @@ function Index(props) {
     }
 
     fetchLoginInfo();
-  }, []);
+  }, [employee_number]);
 
   // get user data info
   useEffect(() => {
@@ -146,7 +146,6 @@ function Index(props) {
     }, 1000);
     return () => clearTimeout(timer);
   }, [userData])
-
 
   return (
     <Fragment>
