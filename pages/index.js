@@ -8,6 +8,10 @@ import nextCookie from 'next-cookies';
 
 function Index(props) {
 
+  // state for login profile
+  const [ loginProfile, setLoginProfile ] = useState('');
+  console.log(loginProfile.username);
+
   // state for Employee Number
   const [ employee_number, setEmployee_number ] = useState('');
   const handleEmployeeNumberOnChange = (e) => {
@@ -31,6 +35,28 @@ function Index(props) {
   // state for new scan remove image
   const [ scan, setScan ] = useState(true);
   
+  // post/get login data
+  useEffect(() => {
+    async function fetchLoginInfo(){
+      let routePOST = 'http://dev-metaspf401.sunpowercorp.com:4000/getuserprofile'
+      
+      let responsePOST = await fetch(`${routePOST}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          token: props.token
+        })
+      })
+
+      if(responsePOST.status === 200){
+        setLoginProfile(await responsePOST.json());
+      }
+
+    }
+
+    fetchLoginInfo();
+  }, []);
+
   // get user data info
   useEffect(() => {
     async function fetchAccountInfo(){
@@ -76,7 +102,7 @@ function Index(props) {
             async function fetchAttendance(){
               let route = 'http://dev-metaspf401.sunpowercorp.com:4000/getattendancelogs'
               
-              let response = await fetch(`${route}/IN/ENTRANCE1`)
+              let response = await fetch(`${route}/IN/${loginProfile.username}`)
           
               if(response.status === 200){
                 setRecentLogs(await response.json())
@@ -97,7 +123,7 @@ function Index(props) {
     async function fetchAttendance(){
       let route = 'http://dev-metaspf401.sunpowercorp.com:4000/getattendancelogs'
       
-      let response = await fetch(`${route}/IN/ENTRANCE1`)
+      let response = await fetch(`${route}/IN/${loginProfile.username}`)
   
       if(response.status === 200){
         setRecentLogs(await response.json())
