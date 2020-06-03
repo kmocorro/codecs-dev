@@ -6,7 +6,7 @@ import { withAuthSync, logout } from '../utils/auth';
 import nextCookie from 'next-cookies';
 
 
-function Index() {
+function Index(props) {
 
   // state for Employee Number
   const [ employee_number, setEmployee_number ] = useState('');
@@ -57,7 +57,7 @@ function Index() {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              //token: props.token,
+              token: props.token,
               employeeNumber: userData.id,
               mode: 'IN',
               device: 'ENTRANCE1',
