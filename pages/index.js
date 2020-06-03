@@ -19,6 +19,9 @@ function Index(props) {
     setScan(true)
   }
 
+  // state for RECORD ATTENDACE response message
+  const [ serverResponseMessage, setServerResponseMessage ] = useState('');
+
   // state for User Data
   const [ userData, setUserData ] = useState('');
   console.log(userData);
@@ -93,7 +96,8 @@ function Index(props) {
           })
 
           if(responsePOST.status === 200){
-            console.log(await responsePOST.json());
+            //console.log(await responsePOST.json());
+            setServerResponseMessage(await responsePOST.json());
           }
         }
 
@@ -157,6 +161,7 @@ function Index(props) {
           employee_number={employee_number}
           recentLogs={recentLogs}
           handleEmployeeNumberOnChange={handleEmployeeNumberOnChange}
+          serverResponseMessage={serverResponseMessage}
         />
       </Layout>
     </Fragment>

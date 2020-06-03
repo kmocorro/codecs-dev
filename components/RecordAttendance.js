@@ -45,7 +45,7 @@ const tableIcons = {
   ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
 };
 
-
+import { Alert, AlertTitle } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -173,9 +173,24 @@ export default function RecordAttendance(props) {
                 </Paper>
                 <img src={props.imgSrc} className={classes.profilePic}/>
               </CardContent>
-              <Container maxWidth="md">
-                <Typography variant="h4" color="textSecondary" align="center" gutterBottom>{moment(new Date()).format('MMMM DD YYYY, h:mm:ss a')}</Typography>
-              </Container>
+              {
+                props.serverResponseMessage.status !== 'success' ?
+                <Alert severity="error">
+                  <AlertTitle>
+                    Error
+                  </AlertTitle>
+                  Please try again.
+                </Alert>
+                :
+                <Alert severity="success">
+                  <AlertTitle>
+                    <Typography align="center" variant="h4">
+                    {moment(new Date()).format('MMMM DD YYYY, h:mm:ss a')}
+                    </Typography>
+                  </AlertTitle>
+                  {props.serverResponseMessage.message}
+                </Alert>
+              }
             </Paper>
             :
             <Paper elevation={0} className={classes.rightPanelPaper} >
