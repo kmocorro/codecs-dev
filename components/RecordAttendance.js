@@ -52,10 +52,10 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   leftPanelPaper: {
-    marginTop: 80,
+    marginTop: 40,
   },
   rightPanelPaper: {
-    marginTop: 80,
+    marginTop: 40,
   },
   leftPanelResultPaper: {
     marginTop: 20,
