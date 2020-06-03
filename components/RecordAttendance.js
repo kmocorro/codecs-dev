@@ -195,15 +195,17 @@ export default function RecordAttendance(props) {
                           {props.serverResponseMessage.message}
                         </Alert>
                         : props.serverResponseMessage.status === 'failed' ? 
-                        <Alert severity="error">
-                          <AlertTitle>
-                            Error
-                          </AlertTitle>
-                          
-                          {props.serverResponseMessage.status} - {props.serverResponseMessage.message}
-                        </Alert>
-                        :
-                        <></>
+                          <Alert severity="error">
+                            <AlertTitle>
+                              Error
+                            </AlertTitle>
+                            {/** removed
+                             *  {props.serverResponseMessage.message}
+                            */}
+                            {props.serverResponseMessage.status} - Try Again.
+                          </Alert>
+                          :
+                          <></>
                       }
                     </Container>
                   </Paper>
