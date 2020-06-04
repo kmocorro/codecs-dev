@@ -52,13 +52,13 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   leftPanelPaper: {
-    marginTop: 40,
+    marginTop: 30,
   },
   rightPanelPaper: {
-    marginTop: 40,
+    marginTop: 30,
   },
   leftPanelResultPaper: {
-    marginTop: 20,
+    marginTop: 30,
     height: 500
   },
   rightPanelResultPaper: {
@@ -83,6 +83,12 @@ const useStyles = makeStyles((theme) => ({
   },
   profileCardContent: {
     padding: 5
+  },
+  triage: {
+    fontFamily: 'Helvetica'
+  },
+  instruction: {
+    fontFamily: 'Helvetica'
   }
 }));
 
@@ -108,7 +114,7 @@ export default function RecordAttendance(props) {
           <Grid item xs={12} sm={12} md={6} lg={6} >
             <Paper elevation={0} className={classes.leftPanelPaper} >
               <CardContent>
-                <Typography align="left" variant="h6">Welcome to SunPower</Typography>
+                <Typography align="left" variant="h4" className={classes.instruction}>Scan your Barcode ID</Typography>
               </CardContent>
               <Container maxWidth="sm">
                 <TextField
@@ -212,14 +218,17 @@ export default function RecordAttendance(props) {
                   :
                   <Paper elevation={0} className={classes.rightPanelPaper} >
                     <CardContent>
-                      <Typography align="right" variant="h5" color="textSecondary">Recent Logs</Typography>
+                      <Typography className={classes.triage} align="right" variant="h3" color="textPrimary">"Sabihin po sa nurse kung ikaw ay may ubo, sipon or sore throat".</Typography>
+                    </CardContent>
+                    <CardContent>
+                      <Typography align="right" variant="h6" color="textSecondary">Recent Logs</Typography>
                     </CardContent>
                     <Container maxWidth="md">
                       {
                         props.recentLogs !== 'undefined' && props.recentLogs !== null && props.recentLogs.length > 0 ?
                           props.recentLogs.slice(0, 5).map((data) => (
                             <Fragment key={data.date_time}>
-                              <div style={{padding: 10, flex: 1}}>
+                              <div style={{padding: 4, flex: 1}}>
                                 <Typography variant="h6" color="primary" align="right">{data.employeeNumber} has successfully logged in</Typography>
                                 <Typography variant="body2" color="textSecondary" align="right">{moment(data.date_time).fromNow()}</Typography>
                               </div>
