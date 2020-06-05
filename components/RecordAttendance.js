@@ -218,7 +218,7 @@ export default function RecordAttendance(props) {
                   :
                   <Paper elevation={0} className={classes.rightPanelPaper} >
                     <CardContent>
-                      <Typography className={classes.triage} align="right" variant="h3" color="textPrimary">"Sabihin po sa nurse kung ikaw ay may ubo, sipon or sore throat".</Typography>
+                      <Typography className={classes.triage} align="right" variant="h3" color="textPrimary">"Sabihin po sa nurse kung may ubo, sipon, lagnat o sore throat ka".</Typography>
                     </CardContent>
                     <CardContent>
                       <Typography align="right" variant="h6" color="textSecondary">Recent Logs</Typography>
