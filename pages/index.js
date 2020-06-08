@@ -145,7 +145,9 @@ function Index(props) {
 
   
   useEffect(() => {
-    setPauseAfterScan(true);
+    if(userData.id){
+      setPauseAfterScan(true);
+    }
     const timer = setTimeout(() => {
       setEmployee_number('')
       //setUserData('')
