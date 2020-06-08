@@ -125,6 +125,7 @@ export default function RecordAttendance(props) {
                   autoFocus
                   onChange={props.handleEmployeeNumberOnChange}
                   value={props.employee_number}
+                  disabled={props.pauseAfterScan}
                 />
                 <Paper elevation={0} className={classes.profileCard}>
                   <CardContent className={classes.profileCardContent}>

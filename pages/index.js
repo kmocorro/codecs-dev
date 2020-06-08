@@ -19,6 +19,9 @@ function Index(props) {
     setScan(true)
   }
 
+  // state for pause after scan
+  const [ pauseAfterScan, setPauseAfterScan ] = useState(false);
+
   // state for RECORD ATTENDACE response message
   const [ serverResponseMessage, setServerResponseMessage ] = useState('');
   console.log(serverResponseMessage);
@@ -71,17 +74,19 @@ function Index(props) {
         //const imageSrc = webcamRef.current.getScreenshot();
         //setImgSrc(imageSrc);
         setUserData(await response.json());
-        setScan(false)
+        
+        setScan(false);
+        
       }
     }
 
     fetchAccountInfo().then(() => {
-        
+      
       if(!scan){
         async function SubmitToServer(){
           let routePOST = 'http://dev-metaspf401.sunpowercorp.com:4000/recordattendance'
 
-          //console.log(imgSrc)
+          //console.log(imgSrc).then(() => {
           let responsePOST = await fetch(`${routePOST}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -97,6 +102,7 @@ function Index(props) {
 
           if(responsePOST.status === 200){
             //console.log(await responsePOST.json());
+      
             setServerResponseMessage(await responsePOST.json());
           }
         }
@@ -139,9 +145,11 @@ function Index(props) {
 
   
   useEffect(() => {
+    setPauseAfterScan(true);
     const timer = setTimeout(() => {
       setEmployee_number('')
       //setUserData('')
+      setPauseAfterScan(false);
       setScan(true)
     }, 1000);
     return () => clearTimeout(timer);
@@ -161,6 +169,7 @@ function Index(props) {
           recentLogs={recentLogs}
           handleEmployeeNumberOnChange={handleEmployeeNumberOnChange}
           serverResponseMessage={serverResponseMessage}
+          pauseAfterScan={pauseAfterScan}
         />
       </Layout>
     </Fragment>
