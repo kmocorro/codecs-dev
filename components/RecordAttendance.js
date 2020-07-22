@@ -126,6 +126,7 @@ export default function RecordAttendance(props) {
                   onChange={props.handleEmployeeNumberOnChange}
                   value={props.employee_number}
                   disabled={props.pauseAfterScan}
+                  onKeyDown={props.handleKeyDown}
                 />
                 <Paper elevation={0} className={classes.profileCard}>
                   <CardContent className={classes.profileCardContent}>
@@ -178,45 +179,59 @@ export default function RecordAttendance(props) {
             <Paper elevation={0} className={classes.rightPanelPaper} >
               <CardContent>
                 {
-                  props.userData.id && props.userData.name && props.employee_number ? 
+                  props.userData.id && props.userData.name ? 
                   <Paper elevation={0} className={classes.rightPanelPaper} >
-                    <CardContent>
-                      <Typography align="right" variant="h5" color="textSecondary">Camera</Typography>
-                    </CardContent>
                     <Container maxWidth="md">
-                      
+                      {/*
                       <Paper elevation={5} className={classes.blankLive}>
                         <CardContent>
 
                         </CardContent>
                       </Paper>
                       <img src={props.imgSrc} className={classes.profilePic}/>
+                      */}
                       {
                         props.serverResponseMessage.status === 'success' ?
                         <Alert severity="success">
                           <AlertTitle>
-                            <Typography align="center" variant="h4">
-                            {moment(new Date()).format('MMMM DD YYYY, h:mm:ss a')}
-                            </Typography>
+                            Success
                           </AlertTitle>
-                          {props.serverResponseMessage.message}
+                          <Typography align="center" variant="h2">
+                            {props.serverResponseMessage.message}!
+                          </Typography>
                         </Alert>
                         : props.serverResponseMessage.status === 'failed' ? 
                           <Alert severity="error">
                             <AlertTitle>
-                              Error
+                              Error reading barcode...
                             </AlertTitle>
                             {/** removed
                              *  {props.serverResponseMessage.message}
                             */}
-                            {props.serverResponseMessage.status} - Try Again.
+                            <Typography align="center" variant="h2">
+                              Please Try Again.
+                            </Typography>
                           </Alert>
                           :
-                          <></>
+                          <>
+                            <Alert severity="error">
+                              <AlertTitle>
+                                No response from the server...
+                              </AlertTitle>
+                              {/** removed
+                               *  {props.serverResponseMessage.message}
+                              */}
+                              <Typography align="center" variant="h2">
+                                Please Try Again.
+                              </Typography>
+                            </Alert>
+                          </>
                       }
                     </Container>
                   </Paper>
                   :
+                  <></>
+                  /*
                   <Paper elevation={0} className={classes.rightPanelPaper} >
                     <CardContent>
                       <Typography className={classes.triage} align="right" variant="h3" color="textPrimary">"Sabihin po sa nurse kung may ubo, sipon, lagnat o sore throat ka".</Typography>
@@ -238,14 +253,13 @@ export default function RecordAttendance(props) {
                         :
                         <></>
                       }
-                      
                     </Container>
                   </Paper>
+                  */
                 }
               </CardContent>
             </Paper>
           </Grid>
-
         }
         
       </Grid>

@@ -10,7 +10,7 @@ function Index(props) {
 
   // state for login profile
   const [ loginProfile, setLoginProfile ] = useState('');
-  console.log(loginProfile.username);
+  //console.log(loginProfile.username);
 
   // state for Employee Number
   const [ employee_number, setEmployee_number ] = useState('');
@@ -28,11 +28,11 @@ function Index(props) {
 
   // state for User Data
   const [ userData, setUserData ] = useState('');
-  console.log(userData);
+  //console.log(userData);
 
   // state for recent logs
   const [ recentLogs, setRecentLogs ] = useState('');
-  console.log(recentLogs);
+  //console.log(recentLogs);
   
   // state for image capturing
   const [imgSrc, setImgSrc] = useState(null);
@@ -42,7 +42,89 @@ function Index(props) {
   // state for new scan remove image
   const [ scan, setScan ] = useState(true);
 
+  const handleKeyDown = (e) => {
+    if(e.key === 'Enter'){
+      
+      setUserData('');
+      console.log('Go!');
+  
+      fetchLoginInfo().then(() => {
+        SubmitToServer().then(() => {
+          fetchAccountInfo().then(() => {
+            fetchAttendance();
+          })
+        })
+      })
+
+      async function fetchAccountInfo(){
+        let route = 'http://dev-metaspf401.sunpowercorp.com:4848/getaccountinfo'
+        
+        let response = await fetch(`${route}/${employee_number}`)
+    
+        if(response.status === 200){
+          //const imageSrc = webcamRef.current.getScreenshot();
+          //setImgSrc(imageSrc);
+          setUserData(await response.json());
+          
+          setScan(false);
+          
+        }
+      }
+      
+      async function SubmitToServer(){
+        let routePOST = 'http://dev-metaspf401.sunpowercorp.com:4000/recordattendance'
+        //console.log(imgSrc).then(() => {
+        let responsePOST = await fetch(`${routePOST}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            token: props.token,
+            employeeNumber: employee_number,
+            mode: 'IN',
+            device: 'ENTRANCE1',
+            base64String: imgSrc,
+            triageRes: 'PASS'
+          })
+        })
+
+        if(responsePOST.status === 200){
+          //console.log(await responsePOST.json());
+          setServerResponseMessage(await responsePOST.json());
+        }
+      }
+
+      async function fetchAttendance(){
+        let route = 'http://dev-metaspf401.sunpowercorp.com:4000/getattendancelogs'
+        
+        let response = await fetch(`${route}/IN/${loginProfile.username}`)
+    
+        if(response.status === 200){
+          setRecentLogs(await response.json())
+        }
+      }
+
+      async function fetchLoginInfo(){
+        let routePOST = 'http://dev-metaspf401.sunpowercorp.com:4000/getuserprofile'
+        
+        let responsePOST = await fetch(`${routePOST}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            token: props.token
+          })
+        })
+  
+        if(responsePOST.status === 200){
+          setLoginProfile(await responsePOST.json());
+        }
+  
+      }
+  
+    }
+  }
+  /*
   useEffect(() => {
+
     async function fetchLoginInfo(){
       let routePOST = 'http://dev-metaspf401.sunpowercorp.com:4000/getuserprofile'
       
@@ -127,7 +209,7 @@ function Index(props) {
 
     
   }, [employee_number]);
-
+  */
 
   useEffect(() => {
     async function fetchAttendance(){
@@ -142,7 +224,6 @@ function Index(props) {
 
     fetchAttendance();
   }, [userData]);
-
   
   useEffect(() => {
     if(userData.id){
@@ -172,6 +253,7 @@ function Index(props) {
           handleEmployeeNumberOnChange={handleEmployeeNumberOnChange}
           serverResponseMessage={serverResponseMessage}
           pauseAfterScan={pauseAfterScan}
+          handleKeyDown={handleKeyDown}
         />
       </Layout>
     </Fragment>
