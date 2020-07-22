@@ -114,12 +114,16 @@ export default function RecordAttendance(props) {
           <Grid item xs={12} sm={12} md={6} lg={6} >
             <Paper elevation={0} className={classes.leftPanelPaper} >
               <CardContent>
-                <Typography align="left" variant="h4" className={classes.instruction}>Scan your Barcode ID</Typography>
+                {
+                  props.employee_number === '' ?
+                  <Typography align="left" variant="h3" style={{color: "green"}} className={classes.instruction}>Scan Barcode ID</Typography>
+                  :
+                  <Typography align="left" variant="h3" className={classes.instruction}>Please wait...</Typography>
+                }
               </CardContent>
               <Container maxWidth="sm">
                 <TextField
                   fullWidth
-                  margin="dense"
                   variant="outlined"
                   label="Scan ID to Enter"
                   autoFocus
