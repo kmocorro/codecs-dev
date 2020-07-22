@@ -234,7 +234,7 @@ function Index(props) {
       //setUserData('')
       setPauseAfterScan(false);
       setScan(true)
-    }, 1000);
+    }, 2000);
     return () => clearTimeout(timer);
   }, [userData])
 
