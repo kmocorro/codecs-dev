@@ -69,6 +69,7 @@ function Index(props) {
     if(e.key === 'Enter'){
       
       setServerResponseMessage({status: ''})
+      setPauseAfterScan(true);
       console.log('Go Search!');
   
       fetchLoginInfo().then(() => {
@@ -148,6 +149,8 @@ function Index(props) {
       setEmployee_number_signature('');
       setUserData('');
       console.log('Go Submit!');
+      setPauseAfterScan(false);
+      
   
       fetchLoginInfo().then(() => {
         if(employee_number === employee_number_signature){
