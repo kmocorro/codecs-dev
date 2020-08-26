@@ -390,7 +390,7 @@ export default function RecordAgreementAttendance(props) {
                   autoFocus
                   onChange={props.handleEmployeeNumberSignatureOnChange}
                   value={props.employee_number_signature}
-                  disabled={props.pauseAfterScan}
+                  disabled={props.pauseAfterScanTriage}
                   onKeyDown={props.handleKeyDownSignature}
                 />
             </Grid>

@@ -44,6 +44,7 @@ function Index(props) {
 
   // state for pause after scan
   const [ pauseAfterScan, setPauseAfterScan ] = useState(false);
+  const [ pauseAfterScanTriage, setPauseAfterScanTriage ] = useState(false);
 
   // state for RECORD ATTENDACE response message
   const [ serverResponseMessage, setServerResponseMessage ] = useState('');
@@ -70,6 +71,7 @@ function Index(props) {
       
       setServerResponseMessage({status: ''})
       setPauseAfterScan(true);
+      setPauseAfterScanTriage(false);
       console.log('Go Search!');
   
       fetchLoginInfo().then(() => {
@@ -150,6 +152,7 @@ function Index(props) {
       setUserData('');
       console.log('Go Submit!');
       setPauseAfterScan(false);
+      setPauseAfterScanTriage(true);
       
   
       fetchLoginInfo().then(() => {
@@ -344,6 +347,7 @@ function Index(props) {
           handleEmployeeNumberOnChange={handleEmployeeNumberOnChange}
           serverResponseMessage={serverResponseMessage}
           pauseAfterScan={pauseAfterScan}
+          pauseAfterScanTriage={pauseAfterScanTriage}
           handleKeyDown={handleKeyDown}
           switcher={switcher}
           handleSwitcherChange={handleSwitcherChange}
