@@ -317,20 +317,15 @@ function Index(props) {
   */
   
   // -- RESTART SWITCH AFTER SEARCHING...
-  /*
+  
   useEffect(() => {
-    if(userData.id){
-      setPauseAfterScan(true);
-    }
     const timer = setTimeout(() => {
-      setEmployee_number_signature('')
       setEmployee_number('')
       setPauseAfterScan(false);
-      setScan(true)
-    }, 2000);
+    }, 60000);
     return () => clearTimeout(timer);
   }, [serverResponseMessage])
-  */
+  
 
   return (
     <Fragment>
