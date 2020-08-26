@@ -399,7 +399,7 @@ export default function RecordAgreementAttendance(props) {
           :(
             props.employee_number === '' ? (
               props.serverResponseMessage.status === 'success' ? (
-                props.switcher.answer_1A || props.switcher.answer_1B || props.switcher.answer_1C || props.switcher.answer_1D || props.switcher.answer_2 || props.switcher.answer_3 || props.switcher.answer_4 || props.switcher.answer_5 ? (
+                props.switcher.answer_1A || props.switcher.answer_1B || props.switcher.answer_1C || props.switcher.answer_1D || props.switcher.answer_2 || props.switcher.answer_3 || props.switcher.answer_4 ? (
                   <Grid item xs={12} sm={12} md={6} lg={6} style={{paddingTop: 120, margin: 'auto'}}>
                     <Typography  align="center" gutterBottom>
                       <PanToolIcon style={{ fontSize: 100, color: 'maroon' }} />
